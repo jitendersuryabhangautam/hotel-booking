@@ -44,9 +44,16 @@ cache.Init()      // 👈 Redis Init
 	roomRepo := repositories.NewRoomRepository(db.DB)
 	roomService := services.NewRoomService(roomRepo)
 	roomHandler := handlers.NewRoomHandler(roomService)
+		// Booking Setup
 	bookingRepo := repositories.NewBookingRepository(db.DB)
 	bookingService := services.NewBookingService(bookingRepo)
 	bookingHandler := handlers.NewBookingHandler(bookingService)
+
+	// Payment Setup ✅ (includes cache)
+	paymentRepo := repositories.NewPaymentRepository(db.DB)
+	paymentService := services.NewPaymentService(paymentRepo)
+	paymentHandler := handlers.NewPaymentHandler(paymentService)
+
 
 	v1 := router.Group("/api/v1")
 	{
@@ -67,6 +74,9 @@ cache.Init()      // 👈 Redis Init
 		rooms.PUT("/:id", roomHandler.UpdateRoom)
 		rooms.DELETE("/:id", roomHandler.DeleteRoom)
 		rooms.GET("/available", roomHandler.GetAvailableRooms) // ✅ New API
+			// ✅ Payments (new API route)
+		payments := v1.Group("/payments")
+		payments.GET("/:id", paymentHandler.GetPaymentByID)
 	}
 
 	port := os.Getenv("PORT")
