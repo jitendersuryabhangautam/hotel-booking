@@ -15,3 +15,14 @@ type Payment struct {
 	ProcessedAt   *time.Time `json:"processed_at"`
 	CreatedAt     time.Time  `json:"created_at"`
 }
+
+type PaymentFilter struct {
+	BookingID *int
+	Status    *string
+	Mehtod    *string
+	CardBrand *string
+	MinAmount *float64
+	MaxAmount *float64
+	StartDate *time.Time
+	EndDate   *time.Time
+}
