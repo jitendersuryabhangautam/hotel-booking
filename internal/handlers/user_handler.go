@@ -33,11 +33,11 @@ func (h *UserHandler) Register(c *gin.Context) {
 
 	// 👉 Convert RegisterRequest ➔ User struct
 	user := &models.User{
-	Name:     req.Name,
-	Email:    req.Email,
-	Password: req.Password,
-	Role:     req.Role, // 👈 Map this too
-}
+		Name:     req.Name,
+		Email:    req.Email,
+		Password: req.Password,
+		Role:     req.Role, // 👈 Map this too
+	}
 
 	// Call service
 	createdUser, err := h.service.RegisterUser(c.Request.Context(), user)
@@ -84,5 +84,3 @@ func (h *UserHandler) GetMe(c *gin.Context) {
 	// Success
 	response.JSON(c, http.StatusOK, true, "User fetched successfully", user, "")
 }
-
-
